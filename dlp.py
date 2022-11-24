@@ -15,7 +15,7 @@ g = pow(hash_no, 2652383248234496409305378666, p)
 stdout_redir = './out.txt'
 stderr_redir = './err.txt'
 
-os.system('python ../cado-nfs/cado-nfs.py -t all -dlp -ell {} target={},{} {} > {} 2> {}'.format(order,
+os.system('python ./cado-nfs/cado-nfs.py -t all -dlp -ell {} target={},{} {} > {} 2> {}'.format(order,
           target, g, p, stdout_redir, stderr_redir))
 
 file = open('./out.txt', "r")
