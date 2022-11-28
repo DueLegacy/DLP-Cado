@@ -1,6 +1,6 @@
 import hashlib
 import sys
-import os
+import time
 import subprocess
 
 p = 31050371851708889440695779044384182719244728783
@@ -34,7 +34,10 @@ if test != target:
 else:
     print(result)
 
-with open('./ret.txt', "w", encoding='utf-8') as f:
+file_name = './output/' + \
+    f"{time.strftime('%H.%M.%S',time.localtime(time.time()))}.{str(g)[-8:]}" + '.txt'
+
+with open(file_name, "w", encoding='utf-8') as f:
     f.write(str(g))
     f.write('\n')
     f.write(str(result))
