@@ -18,13 +18,25 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: "3.10"
-      - name: Install dependencies
+      - name: Install dependencies & Clone repo
         run: |
           python -m pip install --upgrade pip
           sudo apt-get install -y build-essential make cmake libgmp-dev
-      - name: Cado works
-        run: |
           git clone https://gitlab.inria.fr/cado-nfs/cado-nfs.git
+      - name: Cache build
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: cado-nfs/build
+          key: ${{ runner.os }}-caches
+      - name: Rename build
+        if: steps.cache.outputs.cache-hit == 'true'
+        run: |
+          cd cado-nfs/build
+          mv $(ls .) $(hostname)
+      - name: Make cado
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
           cd cado-nfs
           make
       - name: Run Python
