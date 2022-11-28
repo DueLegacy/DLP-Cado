@@ -1,14 +1,11 @@
-name: CI
+name: Checks
 
 on:
-  workflow_dispatch:
-    inputs:
-      studentNumber:
-        description: number
-        required: true
+  pull_request:
 
 jobs:
   build:
+    if: github.repository == 'DueDine/DLP-Cado'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -22,15 +19,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           sudo apt-get install -y build-essential make cmake libgmp-dev
-      - name: Test inputs
-        run: echo "number:${{github.event.inputs.studentNumber}}"
       - name: Cado works
         run: |
           git clone https://gitlab.inria.fr/cado-nfs/cado-nfs.git
           cd cado-nfs
           make
       - name: Run Python
-        run: python input.py ${{ github.event.inputs.studentNumber }}
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Automated Change
+        run: python check.py

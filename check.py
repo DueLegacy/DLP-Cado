@@ -1,16 +1,14 @@
-import os
 import hashlib
+import os
 
 p = 31050371851708889440695779044384182719244728783
 target = 13821904325547285207847180361637528630753679004
-order = 11706593258111142827  # ell afterwards
+order = 11706593258111142827
 
-file = open("./no.txt", "r", encoding='utf-8')
-no = file.read()
-no = no.strip('\n')
-file.close()
-hash_no = int(hashlib.sha256(no.encode('utf-8')).hexdigest(), 16)
-g = pow(hash_no, 2652383248234496409305378666, p)
+stu_no = '20337000'
+
+hash_stu_no = int(hashlib.sha256(stu_no.encode('utf-8')).hexdigest(), 16)
+g = pow(hash_stu_no, 2652383248234496409305378666, p)
 
 stdout_redir = './out.txt'
 stderr_redir = './err.txt'
@@ -25,15 +23,8 @@ file.close()
 
 result = log_h * pow(log_g, -1, order) % order
 
-test = pow(g, result, p)
-
-if test != target:
-    print("something wrong")
-else:
-    print(result)
-
-file = open('./ret.txt', "w", encoding='utf-8')
-file.write(str(g))
-file.write('\n')
-file.write(str(result))
-file.close()
+# check part
+real_g = 13175463804424026310174311541801263545029264274
+assert(g == real_g)
+real_result = 3849968029612505341
+assert(result == real_result)
