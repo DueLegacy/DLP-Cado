@@ -131,7 +131,6 @@ dmypy.json
 # Output File
 err.txt
 out.txt
-ret.txt
 
 # Cado
 cado-nfs
