@@ -22,6 +22,9 @@ string = "python ./cado-nfs/cado-nfs.py" + \
 
 process = subprocess.run(
     string, shell=True, capture_output=True, encoding='utf-8')
+    
+print(process.stderr)
+print(process.stdout)
 
 log_g = int(process.stdout)
 
